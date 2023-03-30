@@ -14,4 +14,4 @@ You can also compile the project as shown below.
 
 ## Compiling
 
-Before you can make the project, you will need `make` and `g++`/`x86_64-w64-mingw32-g++`. Once they have been installed, write `make`, and a new executable should be created called `osu-pause.exe`.
+Before you can make the project, you will need `make` and `g++`/`x86_64-w64-mingw32-g++`/`i686-w64-mingw32-g++`. Once they have been installed, write `make`, and a new executable should be created called `osu-pause.exe`.
