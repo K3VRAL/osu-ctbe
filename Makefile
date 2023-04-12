@@ -1,14 +1,27 @@
 CC	= x86_64-w64-mingw32-g++
-CFLAGS	= -Wall
+CFLAGS	= -Wall -c -Iinclude/
 LFLAGS	= -static-libgcc -static-libstdc++
 TARGET	= osu-pause.exe 
+BINFLR	= bin/
 
-64:	CC = x86_64-w64-mingw32-g++
-64:	$(TARGET)
+win64:	CC = x86_64-w64-mingw32-g++
+win64:	$(TARGET)
 
-32:	CC = i686-w64-mingw32-g++
-32:	$(TARGET)
+win32:	CC = i686-w64-mingw32-g++
+win32:	$(TARGET)
 
-$(TARGET):
-	$(CC) main.cpp -o $@ $(CFLAGS) $(LFLAGS)
+# Compiling specific object
+%.o: %.c | $(BINFLR)
+	$(CC) -o $(BINFLR)$(notdir $@) $< $(CFLAGS)
 
+# Compiling all objects to make an executable
+$(TARGET): $(addsuffix .o, $(basename $(shell find include/ -type f -name "*.hpp" | grep -Po "(?<=include/).*" | sed "s/^/src\//")))
+	$(CC) -o $(BINFLR)$@ $(addprefix $(BINFLR), $(notdir $^)) $(LFLAGS)
+
+# Make bin/ folder
+$(BINFLR):
+	$(shell mkdir -p $@)
+
+# Clean up
+clean:
+	$(shell rm -rf $(BINFLR))
