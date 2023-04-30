@@ -11,11 +11,11 @@ win32:	CC = i686-w64-mingw32-g++
 win32:	$(TARGET)
 
 # Compiling specific object
-%.o: %.c | $(BINFLR)
+%.o: %.cpp | $(BINFLR)
 	$(CC) -o $(BINFLR)$(notdir $@) $< $(CFLAGS)
 
 # Compiling all objects to make an executable
-$(TARGET): $(addsuffix .o, $(basename $(shell find include/ -type f -name "*.hpp" | grep -Po "(?<=include/).*" | sed "s/^/src\//")))
+$(TARGET): $(addsuffix .o, $(basename $(shell find "src/" -type "f" -name "*.cpp")))
 	$(CC) -o $(BINFLR)$@ $(addprefix $(BINFLR), $(notdir $^)) $(LFLAGS)
 
 # Make bin/ folder

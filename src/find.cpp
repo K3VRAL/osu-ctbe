@@ -1,4 +1,4 @@
-#include "find.hpp"
+#include "main.hpp"
 
 // https://github.com/UnnamedOrange/osu-memory/blob/main/native/include/osu_memory/readable_process.hpp#L92
 uintptr_t find(vector<uint8_t> bin, string mask, HANDLE h_process)
@@ -14,7 +14,7 @@ uintptr_t find(vector<uint8_t> bin, string mask, HANDLE h_process)
         MEMORY_BASIC_INFORMATION mem_info;
         if (!VirtualQueryEx(h_process, crt_address, &mem_info, sizeof(mem_info)))
         {
-            return NULL;
+            return (uintptr_t)NULL;
         }
 
         if ((mem_info.Protect & PAGE_EXECUTE_READWRITE) && mem_info.State == MEM_COMMIT)
@@ -46,5 +46,5 @@ uintptr_t find(vector<uint8_t> bin, string mask, HANDLE h_process)
         }
         crt_address = PVOID(uintptr_t(crt_address) + mem_info.RegionSize);
     }
-    return NULL;
+    return (uintptr_t)NULL;
 }

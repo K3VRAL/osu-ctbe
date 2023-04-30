@@ -1,7 +1,16 @@
 #pragma once
 
-#include "open.hpp"
-#include "find.hpp"
-#include "read.hpp"
-#include "get_addr_offset.hpp"
-#include "press_key.hpp"
+#include <cstdint>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <windows.h>
+#include <tlhelp32.h>
+
+using namespace std;
+
+DWORD open(wstring);
+uintptr_t find(vector<uint8_t>, string, HANDLE);
+bool read(uint32_t *, int32_t, HANDLE);
+uintptr_t get_addr_offset(uintptr_t, vector<int32_t>, HANDLE);
+void press_key(char ch);

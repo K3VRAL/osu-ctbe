@@ -1,4 +1,4 @@
-#include "get_addr_offset.hpp"
+#include "main.hpp"
 
 uintptr_t get_addr_offset(uintptr_t base_addr, vector<int32_t> offsets, HANDLE h_process)
 {

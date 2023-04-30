@@ -1,4 +1,4 @@
-#include "main.cpp"
+#include "main.hpp"
 
 // Client Status
 #define STATUS_FIND             vector<uint8_t>{ 0x75, 0x07, 0x8B, 0x45, 0x90, 0xC6, 0x40, 0x2A, 0x00, 0x83, 0x3D, 0x00, 0x00, 0x00, 0x00, 0x0F }   // https://github.com/OsuSync/OsuRTDataProvider/blob/master/Memory/OsuStatusFinder.cs#L8
@@ -30,7 +30,7 @@ int main(int argc, char** argv)
 
     // Find window/process and get it's process id.
     DWORD p_id = open(L"osu!.exe");
-    if (p_id == NULL)
+    if (p_id == (DWORD)NULL)
     {
         cout << "Failed to find the process ID of osu!.exe.\n";
         return 1;
@@ -38,7 +38,7 @@ int main(int argc, char** argv)
 
     // Open process to read data from
     HANDLE h_process = OpenProcess(SYNCHRONIZE | PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_VM_READ, false, p_id);
-    if (h_process == NULL)
+    if (h_process == (HANDLE)NULL)
     {
         cout << "Failed to open process of osu!.exe.\n";
         return 1;
@@ -48,13 +48,13 @@ int main(int argc, char** argv)
     while (true)
     {
         uintptr_t status_addr = find(STATUS_FIND, STATUS_MASK, h_process);
-        if (status_addr == NULL) break;
+        if (status_addr == (uintptr_t)NULL) break;
 
         uintptr_t time_addr = find(TIME_FIND, TIME_MASK, h_process);
-        if (time_addr == NULL) continue;
+        if (time_addr == (uintptr_t)NULL) continue;
 
         uintptr_t hitobjs_addr = find(HITOBJS_FIND, HITOBJS_MASK, h_process);
-        if (hitobjs_addr == NULL) continue;
+        if (hitobjs_addr == (uintptr_t)NULL) continue;
 
         // Evaluate data and check if should pause
         bool found = false;

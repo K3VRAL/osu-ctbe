@@ -1,4 +1,4 @@
-#include "open.hpp"
+#include "main.hpp"
 
 // https://stackoverflow.com/a/35623208
 DWORD open(wstring name)
@@ -6,14 +6,14 @@ DWORD open(wstring name)
     HANDLE h_process_snap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     if (h_process_snap == INVALID_HANDLE_VALUE)
     {
-        return NULL;
+        return (DWORD)NULL;
     }
 
     PROCESSENTRY32W pe32{ sizeof(pe32) };
     if (!Process32FirstW(h_process_snap, &pe32))
     {
         CloseHandle(h_process_snap);
-        return NULL;
+        return (DWORD)NULL;
     }
 
     do
@@ -28,5 +28,5 @@ DWORD open(wstring name)
     } while (Process32NextW(h_process_snap, &pe32));
 
     CloseHandle(h_process_snap);
-    return NULL;
+    return (DWORD)NULL;
 }
