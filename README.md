@@ -1,3 +1,7 @@
+**OutDated**
+
+Instead of having to submit the score by pausing right before the end of the map, then turning the internet on, and submitting, you can buffer the submission by hitting the results screen, connecting to the internet, then pressing the further results in the bottom of the screen. Also, certain memory locations don't work anymore.
+
 # osu-pause
 
 osu-pause is a Windows application that pauses osu!.exe (while in game) just before the final object. This was created for offline players who want to submit their scores without being online, or having the playcount number get higher.
