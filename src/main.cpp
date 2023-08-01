@@ -9,7 +9,7 @@
 #define RULESETS_FIND           vector<uint8_t>{ 0x7D, 0x15, 0xA1, 0x00, 0x00, 0x00, 0x00, 0x85, 0xC0 }                                             // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L23
 #define RULESETS_MASK           "xxx????xx"                                                                                                         // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L23
 #define RULESET_OFFSET          vector<int32_t>{ -0x0B, 0x04, 0x68, 0x38 }                                                                          // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L62
-#define HITKATU_OFFSET          vector<int32_t>{ 0x90 }                                                                                             // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L142
+#define TINYDROPLET_OFFSET      vector<int32_t>{ 0x90 }                                                                                             // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L142
 
 int main(void)
 {
@@ -31,7 +31,7 @@ int main(void)
             continue;
         }
 
-        uint16_t oldkatu = 0;
+        uint16_t oldtd = 0;
         while (WaitForSingleObject(h_process, 0) == WAIT_TIMEOUT)
         {
             // Refresh memory signatures
@@ -48,15 +48,15 @@ int main(void)
                 if (status_value != 2) continue;
 
                 uintptr_t ruleset_addr = get_addr_offset(rulesets_addr, RULESET_OFFSET, h_process);
-                uint16_t hitkatu = get_addr_offset(ruleset_addr, HITKATU_OFFSET, h_process);
+                uint16_t tinydroplet = get_addr_offset(ruleset_addr, TINYDROPLET_OFFSET, h_process);
 
                 // Make a beep sound to tell the user that the application has closed
-                if (hitkatu > oldkatu)
+                if (tinydroplet > oldtd)
                 {
                     Beep(523, 50);
                 }
 
-                oldkatu = hitkatu;
+                oldtd = tinydroplet;
                 Sleep(10);
             }
             Sleep(10);

@@ -1,20 +1,14 @@
-# osu-pause
+# osu-tdm
 
-osu-pause is a Windows application that pauses osu!.exe (while in game) just before the final object. This was created for offline players who want to submit their scores without being online, or having the playcount number get higher.
+osu-tdm is a Windows application that sends a sound on missing a Tiny Droplet. This was created because osu!client doesn't report the misses of Tiny Droplets, only through implicit visuals with the accuracy meter, whereas this application communicates when a Tiny Droplet is missed with auditory communication.
 
 ## Usage
 
-Open up `cmd.exe`, and go to the directory where `osu-pause.exe`. Once there, write `.\osu-pause.exe PAUSE_KEY_HERE`, where `PAUSE_KEY_HERE` is the pause key you've set you're game to (use a letter).
-
-## Installation
-
-You can download the executable from the [Releases](https://github.com/K3VRAL/osu-pause/releases) tab in GitHub.
-
-You can also compile the project as shown below.
+Open up `cmd.exe`, and go to the directory where `osu-pause.exe`.
 
 ## Compiling
 
-Before you can make the project, you will need `make` and `g++`/`x86_64-w64-mingw32-g++`/`i686-w64-mingw32-g++`. Once they have been installed, for the 64-bit version, write `make 64`, for the 32-bit version, write `make 32`, and a new executable should be created called `osu-pause.exe`.
+Before you can make the project, you will need `make` and `g++`/`x86_64-w64-mingw32-g++`/`i686-w64-mingw32-g++`. Once they have been installed, for the 64-bit version, write `make 64`, for the 32-bit version, write `make 32`, and a new executable should be created called `osu-tdm.exe`.
 
 ## Special Thanks
 
