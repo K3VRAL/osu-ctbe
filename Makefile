@@ -1,7 +1,7 @@
 CC	= x86_64-w64-mingw32-g++
 CFLAGS	= -Wall -c -Iinclude/
 LFLAGS	= -static-libgcc -static-libstdc++
-TARGET	= osu-tdm.exe 
+TARGET	= osu-bc.exe 
 BINFLR	= bin/
 
 win64:	CC = x86_64-w64-mingw32-g++

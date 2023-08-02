@@ -1,14 +1,14 @@
-# osu-tdm
+# osu-bc
 
-osu-tdm is a Windows application that sends a sound on missing a Tiny Droplet. This was created because osu!client doesn't report the misses of Tiny Droplets, only through implicit visuals with the accuracy meter, whereas this application communicates when a Tiny Droplet is missed with auditory communication.
+osu-bc is a Windows application that displays the amount of Bananas caught during a play session. This was created because osu!client doesn't report the amount of Bananas a user is catching/catches, only through implicit visuals with the score going up, whereas this application communicates the amount of Bananas caught.
 
 ## Usage
 
-Open up `cmd.exe`, and go to the directory where `osu-pause.exe`.
+Open up `cmd.exe`, and go to the directory where `osu-bc.exe`.
 
 ## Compiling
 
-Before you can make the project, you will need `make` and `g++`/`x86_64-w64-mingw32-g++`/`i686-w64-mingw32-g++`. Once they have been installed, for the 64-bit version, write `make 64`, for the 32-bit version, write `make 32`, and a new executable should be created called `osu-tdm.exe`.
+Before you can make the project, you will need `make` and `g++`/`x86_64-w64-mingw32-g++`/`i686-w64-mingw32-g++`. Once they have been installed, for the 64-bit version, write `make 64`, for the 32-bit version, write `make 32`, and a new executable should be created called `osu-bc.exe`.
 
 ## Special Thanks
 

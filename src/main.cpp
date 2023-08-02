@@ -9,7 +9,10 @@
 #define RULESETS_FIND           vector<uint8_t>{ 0x7D, 0x15, 0xA1, 0x00, 0x00, 0x00, 0x00, 0x85, 0xC0 }                                             // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L23
 #define RULESETS_MASK           "xxx????xx"                                                                                                         // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L23
 #define RULESET_OFFSET          vector<int32_t>{ -0x0B, 0x04, 0x68, 0x38 }                                                                          // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L62
-#define TINYDROPLET_OFFSET      vector<int32_t>{ 0x90 }                                                                                             // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L142
+#define SCORE_OFFSET            vector<int32_t>{ 0x78 }                                                                                             // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L150
+#define FRUITCOMBO_OFFSET       vector<int32_t>{ 0x94 }                                                                                             // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L144
+#define DROPLET_OFFSET          vector<int32_t>{ 0x88 }                                                                                             // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L138
+#define TINYDROPLET_OFFSET      vector<int32_t>{ 0x8C }                                                                                             // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L140
 
 int main(void)
 {
@@ -31,7 +34,8 @@ int main(void)
             continue;
         }
 
-        uint16_t oldtd = 0;
+        int16_t fc_old = 0;
+        vector<uint16_t> fc_l{0};
         while (WaitForSingleObject(h_process, 0) == WAIT_TIMEOUT)
         {
             // Refresh memory signatures
@@ -48,15 +52,19 @@ int main(void)
                 if (status_value != 2) continue;
 
                 uintptr_t ruleset_addr = get_addr_offset(rulesets_addr, RULESET_OFFSET, h_process);
-                uint16_t tinydroplet = get_addr_offset(ruleset_addr, TINYDROPLET_OFFSET, h_process);
-
-                // Make a beep sound to tell the user that the application has closed
-                if (tinydroplet > oldtd)
+                int32_t score = get_addr_offset(ruleset_addr, SCORE_OFFSET, h_process);
+                int16_t fc = get_addr_offset(ruleset_addr, FRUITCOMBO_OFFSET, h_process);
+                if (fc == 0 && fc_l[fc_l.size() - 1] != fc_old)
                 {
-                    Beep(523, 50);
+                    fc_l.push_back(fc_old);
                 }
+                fc_old = fc;
+                int16_t d = get_addr_offset(ruleset_addr, DROPLET_OFFSET, h_process);
+                int16_t td = get_addr_offset(ruleset_addr, TINYDROPLET_OFFSET, h_process);
+                int32_t b = (score - ((fc + accumulate(fc_l.begin(), fc_l.end(), 0, [](int16_t a, int16_t b){ return a * 300 + b; })) + d * 100 + td * 10)) / 1100;
 
-                oldtd = tinydroplet;
+                cout << b << "\t\t\r";
+
                 Sleep(10);
             }
             Sleep(10);
