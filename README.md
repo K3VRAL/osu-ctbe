@@ -4,7 +4,7 @@ osu-tdm is a Windows application that sends a sound on missing a Tiny Droplet. T
 
 ## Usage
 
-Open up `cmd.exe`, and go to the directory where `osu-pause.exe`.
+Open up `cmd.exe`, and go to the directory where `osu-tdm.exe`.
 
 ## Compiling
 
