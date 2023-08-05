@@ -56,12 +56,12 @@ int main(void)
                 int16_t fc = get_addr_offset(ruleset_addr, FRUITCOMBO_OFFSET, h_process);
                 if (fc == 0 && fc_l[fc_l.size() - 1] != fc_old)
                 {
-                    fc_l.push_back(fc_old);
+                    fc_l.push_back(fc_old); // TODO
                 }
                 fc_old = fc;
                 int16_t d = get_addr_offset(ruleset_addr, DROPLET_OFFSET, h_process);
                 int16_t td = get_addr_offset(ruleset_addr, TINYDROPLET_OFFSET, h_process);
-                int32_t b = (score - ((fc + accumulate(fc_l.begin(), fc_l.end(), 0, [](int16_t a, int16_t b){ return a * 300 + b; })) + d * 100 + td * 10)) / 1100;
+                int32_t b = (score - ((fc + accumulate(fc_l.begin(), fc_l.end(), 0, [](int16_t a, int16_t b){ return a * 300 + b; })) + d * 100 + td * 50)) / 1100;
 
                 cout << b << "\t\t\r";
 
