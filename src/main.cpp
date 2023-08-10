@@ -1,18 +1,18 @@
 #include "main.hpp"
 
 // Client Status
-#define STATUS_FIND             vector<uint8_t>{ 0x75, 0x07, 0x8B, 0x45, 0x90, 0xC6, 0x40, 0x2A, 0x00, 0x83, 0x3D, 0x00, 0x00, 0x00, 0x00, 0x0F }   // https://github.com/OsuSync/OsuRTDataProvider/blob/master/Memory/OsuStatusFinder.cs#L8
-#define STATUS_MASK             "xxxxxxxxxxx????x"                                                                                                  // https://github.com/OsuSync/OsuRTDataProvider/blob/master/Memory/OsuStatusFinder.cs#L10
-#define STATUS_OFFSET           vector<int32_t>{ 0x0B, 0x00 }                                                                                       // https://github.com/OsuSync/OsuRTDataProvider/blob/master/Memory/OsuStatusFinder.cs#L24
+#define STATUS_FIND             vector<uint8_t>{ 0x75, 0x07, 0x8B, 0x45, 0x90, 0xC6, 0x40, 0x2A, 0x00, 0x83, 0x3D, 0x00, 0x00, 0x00, 0x00, 0x0F }	// https://github.com/OsuSync/OsuRTDataProvider/blob/master/Memory/OsuStatusFinder.cs#L8
+#define STATUS_MASK             "xxxxxxxxxxx????x"                                                                                                  	// https://github.com/OsuSync/OsuRTDataProvider/blob/master/Memory/OsuStatusFinder.cs#L10
+#define STATUS_OFFSET           vector<int32_t>{ 0x0B, 0x00 }                                                                                       	// https://github.com/OsuSync/OsuRTDataProvider/blob/master/Memory/OsuStatusFinder.cs#L24
 
 // Accuracy
-#define RULESETS_FIND           vector<uint8_t>{ 0x7D, 0x15, 0xA1, 0x00, 0x00, 0x00, 0x00, 0x85, 0xC0 }                                             // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L23
-#define RULESETS_MASK           "xxx????xx"                                                                                                         // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L23
-#define RULESET_OFFSET          vector<int32_t>{ -0x0B, 0x04, 0x68, 0x38 }                                                                          // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L62
-#define SCORE_OFFSET            vector<int32_t>{ 0x78 }                                                                                             // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L150
-#define FRUITCOMBO_OFFSET       vector<int32_t>{ 0x94 }                                                                                             // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L144
-#define DROPLET_OFFSET          vector<int32_t>{ 0x88 }                                                                                             // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L138
-#define TINYDROPLET_OFFSET      vector<int32_t>{ 0x8C }                                                                                             // https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L140
+#define RULESETS_FIND           vector<uint8_t>{ 0x7D, 0x15, 0xA1, 0x00, 0x00, 0x00, 0x00, 0x85, 0xC0 }                                             	// https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L23
+#define RULESETS_MASK           "xxx????xx"                                                                                                         	// https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L23
+#define RULESET_OFFSET          vector<int32_t>{ -0x0B, 0x04, 0x68, 0x38 }                                                                          	// https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L62
+#define SCORE_OFFSET            vector<int32_t>{ 0x78 }                                                                                             	// https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L150
+#define COMBO_OFFSET       	vector<int32_t>{ 0x94 }                                                                    				// https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L144
+#define DROPLET_OFFSET          vector<int32_t>{ 0x88 }                                                                                             	// https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L138
+#define TINYDROPLET_OFFSET      vector<int32_t>{ 0x8C }                                                                                             	// https://github.com/l3lackShark/gosumemory/blob/master/memory/read.go#L140
 
 int main(void)
 {
@@ -34,8 +34,8 @@ int main(void)
             continue;
         }
 
-        int16_t fc_old = 0;
-        vector<uint16_t> fc_l{0};
+        int16_t c_old = 0;
+	
         while (WaitForSingleObject(h_process, 0) == WAIT_TIMEOUT)
         {
             // Refresh memory signatures
@@ -53,7 +53,7 @@ int main(void)
 
                 uintptr_t ruleset_addr = get_addr_offset(rulesets_addr, RULESET_OFFSET, h_process);
                 int32_t score = get_addr_offset(ruleset_addr, SCORE_OFFSET, h_process);
-                int16_t fc = get_addr_offset(ruleset_addr, FRUITCOMBO_OFFSET, h_process);
+                int16_t c = get_addr_offset(ruleset_addr, COMBO_OFFSET, h_process);
                 if (fc == 0 && fc_l[fc_l.size() - 1] != fc_old)
                 {
                     fc_l.push_back(fc_old); // TODO
